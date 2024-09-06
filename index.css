@@ -41,3 +41,31 @@
   
   transition: transform ease 0.3s;
 }
+
+.aircraft-registration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.aircraft-registration__select {
+  margin-top: 30px;
+  padding-left: 20px;
+
+  cursor: pointer;
+
+  width: 250px;
+  height: 50px;
+
+  border: none;
+  border-right: 20px solid transparent;
+  outline: 2px solid black;
+}
+
+.aircraft-registration__option {
+  height: 30px;
+}
