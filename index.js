@@ -508,6 +508,12 @@ function onAircraftRegistrationTemplateLoad(template) {
 
     statesManager.loadState("cabin");
   });
+
+  appRoot
+    .querySelector(".aircraft-registration__button")
+    .addEventListener("click", function () {
+      statesManager.loadState("cabin");
+    });
 }
 
 function aircraftRegistrationInit(state) {

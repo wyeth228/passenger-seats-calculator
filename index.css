@@ -77,6 +77,25 @@
 
   background-color: #bb9357;
 }
+.aircraft-registration__button {
+  padding: 10px 40px 10px 40px;
+  margin-top: 40px;
+
+  font-size: 17px;
+
+  border-radius: 8px;
+  border: none;
+  outline: none;
+
+  color: white;
+  background-color: #c96f34;
+
+  cursor: pointer;
+}
+
+.aircraft-registration__button:hover {
+  background-color: #bb9357;
+}
 
 .cabin {
   display: flex;
