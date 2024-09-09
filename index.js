@@ -519,8 +519,6 @@ function onFileLoadTemplateLoad(template) {
         content
       );
 
-      localStorage.setItem("p", content);
-
       statesManager.loadState("aircraft_registration");
     });
   });
@@ -531,13 +529,3 @@ function fileLoadInit(state) {
 }
 
 statesManager.loadState("file_load");
-
-if (localStorage.getItem("p")) {
-  statesManager.saveStateData(
-    "file_load",
-    "passengersInformationFileContent",
-    localStorage.getItem("p")
-  );
-
-  statesManager.loadState("cabin");
-}
