@@ -5,6 +5,8 @@
   box-sizing: border-box;
 
   font-family: sans-serif, Arial;
+
+  color: #212121;
 }
 
 .file-load {
@@ -14,6 +16,8 @@
 
   width: 100vw;
   height: 100vh;
+
+  background-color: #af9b7d;
 }
 
 .file-load__drag-zone {
@@ -29,7 +33,7 @@
 }
 
 .file-load__drag-zone_active {
-  background-color: #FFEAC5;
+  background-color: #b18a4c;
 }
 
 .file-load__drag-zone_active .file-load__svg {
@@ -38,8 +42,12 @@
 
 .file-load__svg {
   width: 300px;
-  
+
   transition: transform ease 0.3s;
+}
+
+.file-load__svg path {
+  stroke: #212121;
 }
 
 .aircraft-registration {
@@ -50,6 +58,8 @@
 
   width: 100vw;
   height: 100vh;
+
+  background-color: #af9b7d;
 }
 
 .aircraft-registration__select {
@@ -64,8 +74,177 @@
   border: none;
   border-right: 20px solid transparent;
   outline: 2px solid black;
+
+  background-color: #b18a4c;
 }
 
-.aircraft-registration__option {
-  height: 30px;
+.cabin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.cabin__passengers {
+  flex: 1;
+
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: #af9b7d;
+}
+
+.cabin__passengers-header {
+  width: 100%;
+
+  padding: 40px;
+}
+
+.cabin__table {
+  border-collapse: collapse;
+}
+
+.cabin__table th,
+td {
+  width: 120px;
+  height: 50px;
+}
+
+.cabin__table tr:nth-child(even) {
+  background-color: #b18a4c;
+}
+
+.cabin__table td {
+  text-align: center;
+}
+
+.cabin__passengers-quantity {
+  background-color: #bb9357;
+
+  border-radius: 4px;
+
+  padding: 24px 0 24px 12px;
+}
+
+.cabin__passengers-total {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.cabin__passengers-notice {
+  margin-top: 20px;
+
+  background-color: #c96f34;
+
+  border-radius: 4px;
+
+  padding: 24px 0 24px 12px;
+}
+
+.cabin__map {
+  flex: 1;
+
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: #356859;
+}
+
+.cabin__zone {
+  display: flex;
+
+  margin-top: 10px;
+}
+
+.cabin__zone-name {
+  min-width: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #2a8fa1;
+}
+
+.cabin__map-header {
+  width: 100%;
+
+  padding: 40px;
+}
+
+.cabin__rows-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.cabin__row {
+  margin-top: 10px;
+
+  display: flex;
+}
+
+.cabin__row:first-child {
+  margin-top: 0;
+}
+
+.cabin__row-number {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 40px;
+  height: 40px;
+}
+
+.cabin__cell {
+  width: 40px;
+  height: 40px;
+
+  border: 2px solid #212121;
+  background-color: grey;
+
+  margin-right: 10px;
+}
+
+.cabin__cell_ocuppied {
+  background-color: #195fe0;
+}
+
+.cabin__cell:nth-child(odd) {
+  margin-right: 50px;
+}
+
+.cabin__cell:last-child {
+  margin-right: 0;
+}
+
+.cabin__columns {
+  display: flex;
+
+  margin-left: 80px;
+}
+
+.cabin__column {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 10px;
+}
+
+.cabin__column:nth-child(even) {
+  margin-right: 50px;
 }
