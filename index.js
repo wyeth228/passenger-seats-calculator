@@ -430,6 +430,14 @@ function calculatePassengersInformation() {
   renderAdditionalPassengersInformation();
 
   renderCabinMap();
+
+  appRoot
+    .querySelector(".cabin__button_red")
+    .addEventListener("click", function () {
+      localStorage.removeItem("file");
+
+      statesManager.loadState("file_load");
+    });
 }
 
 function onCabinTemplateLoad(template) {
@@ -484,6 +492,10 @@ function getFileContentFromEvent(event, callback) {
   };
 }
 
+function saveFileToLocalStorage(content) {
+  localStorage.setItem("file", content);
+}
+
 function onFileLoadTemplateLoad(template) {
   appRoot.innerHTML = template;
 
@@ -519,6 +531,8 @@ function onFileLoadTemplateLoad(template) {
         content
       );
 
+      saveFileToLocalStorage(content);
+
       statesManager.loadState("aircraft_registration");
     });
   });
@@ -528,4 +542,16 @@ function fileLoadInit(state) {
   loadFile(state.htmlTemplateSrc, onFileLoadTemplateLoad);
 }
 
-statesManager.loadState("file_load");
+var file = localStorage.getItem("file");
+
+if (file) {
+  statesManager.saveStateData(
+    "file_load",
+    "passengersInformationFileContent",
+    file
+  );
+
+  statesManager.loadState("cabin");
+} else {
+  statesManager.loadState("file_load");
+}

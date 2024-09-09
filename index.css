@@ -33,7 +33,7 @@
 }
 
 .file-load__drag-zone_active {
-  background-color: #b18a4c;
+  background-color: #bb9357;
 }
 
 .file-load__drag-zone_active .file-load__svg {
@@ -75,7 +75,7 @@
   border-right: 20px solid transparent;
   outline: 2px solid black;
 
-  background-color: #b18a4c;
+  background-color: #bb9357;
 }
 
 .cabin {
@@ -117,7 +117,7 @@ td {
 }
 
 .cabin__table tr:nth-child(even) {
-  background-color: #b18a4c;
+  background-color: #bb9357;
 }
 
 .cabin__table td {
@@ -247,4 +247,34 @@ td {
 
 .cabin__column:nth-child(even) {
   margin-right: 50px;
+}
+
+.cabin__button {
+  padding: 10px 20px 10px 20px;
+
+  font-size: 17px;
+
+  border-radius: 8px;
+  border: none;
+  outline: none;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+.cabin__button_red {
+  background-color: #ec2a10;
+}
+
+.cabin__button_red:hover {
+  background-color: #d41f07;
+}
+
+.cabin__button_orange {
+  background-color: #bb9357;
+}
+
+.cabin__button_orange:hover {
+  background-color: #c96f34;
 }
