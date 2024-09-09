@@ -45,31 +45,31 @@ function element(type, classNames) {
 var statesManager = {
   states: [
     {
-      data: { passengersInformationFileContent: undefined },
       name: "file_load",
+      data: { passengersInformationFileContent: undefined },
       htmlTemplateSrc: "./html_templates/file_load.html",
       callback: fileLoadInit,
     },
     {
+      name: "aircraft_registration",
       data: {
         options: [
           { value: "UP-CJ004" },
           { value: "UP-CJ005" },
           { value: "UP-CJ015" },
         ],
-        aircraftRegistration: "UP-CJ004",
+        aircraftRegistration: undefined,
       },
-      name: "aircraft_registration",
       htmlTemplateSrc: "./html_templates/aircraft_registration.html",
       callback: aircraftRegistrationInit,
     },
     {
+      name: "cabin",
       data: {
         aircrafts: undefined,
         passengers: [],
         renderedRowsQuantity: 0,
       },
-      name: "cabin",
       htmlTemplateSrc: "./html_templates/cabin.html",
       callback: cabinInit,
     },
@@ -438,6 +438,20 @@ function calculatePassengersInformation() {
 
       statesManager.loadState("file_load");
     });
+
+  appRoot
+    .querySelector(".cabin__button_orange")
+    .addEventListener("click", function () {
+      localStorage.removeItem("aircraft_registration");
+
+      statesManager.saveStateData(
+        "aircraft_registration",
+        "aircraftRegistration",
+        undefined
+      );
+
+      statesManager.loadState("aircraft_registration");
+    });
 }
 
 function onCabinTemplateLoad(template) {
@@ -454,6 +468,19 @@ function cabinInit(state) {
   loadFile(state.htmlTemplateSrc, onCabinTemplateLoad);
 }
 
+function setDefaultValueForAircraftRegistration() {
+  var value = statesManager.getDataFromState("aircraft_registration").options[0]
+    .value;
+
+  statesManager.saveStateData(
+    "aircraft_registration",
+    "aircraftRegistration",
+    value
+  );
+
+  localStorage.setItem("aircraft_registration", value);
+}
+
 function onAircraftRegistrationTemplateLoad(template) {
   appRoot.innerHTML = template;
 
@@ -468,12 +495,16 @@ function onAircraftRegistrationTemplateLoad(template) {
     select.appendChild(optionElement);
   }
 
+  setDefaultValueForAircraftRegistration();
+
   select.addEventListener("change", function (event) {
     statesManager.saveStateData(
       "aircraft_registration",
       "aircraftRegistration",
       event.target.value
     );
+
+    localStorage.setItem("aircraft_registration", event.target.value);
 
     statesManager.loadState("cabin");
   });
@@ -543,12 +574,19 @@ function fileLoadInit(state) {
 }
 
 var file = localStorage.getItem("file");
+var aircraftRegistration = localStorage.getItem("aircraft_registration");
 
 if (file) {
   statesManager.saveStateData(
     "file_load",
     "passengersInformationFileContent",
     file
+  );
+
+  statesManager.saveStateData(
+    "aircraft_registration",
+    "aircraftRegistration",
+    aircraftRegistration
   );
 
   statesManager.loadState("cabin");

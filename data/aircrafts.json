@@ -1,5 +1,6 @@
 {
   "UP-CJ004": {
+    "registration": "UP-CJ004",
     "columns": "ACDF",
     "cellsQuantityOfRows": {
       "1": 2,
@@ -24,6 +25,7 @@
     }
   },
   "UP-CJ005": {
+    "registration": "UP-CJ005",
     "columns": "ACDF",
     "cellsQuantityOfRows": {
       "1": 2,
@@ -48,6 +50,7 @@
     }
   },
   "UP-CJ015": {
+    "registration": "UP-CJ015",
     "columns": "ACDF",
     "cellsQuantityOfRows": {
       "1": 4,
