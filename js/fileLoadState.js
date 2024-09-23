@@ -1,4 +1,4 @@
-define((function () {
+define(function () {
   var DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME = "file-load__drag-zone_active";
   var DRAG_ZONE_CLASSNAME = "file-load__drag-zone";
 
@@ -80,4 +80,4 @@ define((function () {
   return {
     onInit,
   };
-})());
+});

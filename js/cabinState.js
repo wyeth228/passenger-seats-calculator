@@ -1,4 +1,4 @@
-define((function () {
+define(function () {
   var AIRCRAFTS_JSON_SRC = "./data/aircrafts.json";
 
   var MAP_WRAPPER_CLASSNAME = "cabin__map-wrapper";
@@ -437,4 +437,4 @@ define((function () {
   return {
     onInit,
   };
-})());
+});

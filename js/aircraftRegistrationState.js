@@ -1,4 +1,4 @@
-define((function () {
+define(function () {
   var dependencies = {
     appRoot: undefined,
     saveStateData: undefined,
@@ -67,4 +67,4 @@ define((function () {
   return {
     onInit,
   };
-})());
+});

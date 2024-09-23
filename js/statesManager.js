@@ -1,4 +1,4 @@
-define((function () {
+define(function () {
   var states = [];
 
   var dependencies = {
@@ -50,4 +50,4 @@ define((function () {
     getDataFromState,
     init,
   };
-})());
+});
