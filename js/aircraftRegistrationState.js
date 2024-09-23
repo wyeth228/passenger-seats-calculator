@@ -1,19 +1,10 @@
 define((function () {
   var dependencies = {
     appRoot: undefined,
-    loadFile: undefined,
     saveStateData: undefined,
     loadState: undefined,
     getDataFromState: undefined,
   };
-
-  function initTemplate(htmlTemplateSrc, callback) {
-    dependencies.loadFile(htmlTemplateSrc, function (template) {
-      dependencies.appRoot.innerHTML = template;
-
-      callback();
-    });
-  }
 
   function resetAircraftRegistrationValue() {
     var value = dependencies.getDataFromState("aircraft_registration")
@@ -56,7 +47,17 @@ define((function () {
     dependencies.loadState("cabin");
   }
 
-  function onTemplateInit() {
+  function initTemplate(htmlTemplateSrc, callback) {
+    dependencies.loadFile(htmlTemplateSrc, function (template) {
+      dependencies.appRoot.innerHTML = template;
+
+      callback();
+    });
+  }
+
+  function onInit(moduleDependecies) {
+    dependencies = moduleDependecies;
+
     var selectElement = document.querySelector(
       ".aircraft-registration__select"
     );
@@ -69,12 +70,6 @@ define((function () {
 
     selectElement.addEventListener("change", onSelect);
     skipButton.addEventListener("click", skipSelection);
-  }
-
-  function onInit(state, moduleDependecies) {
-    dependencies = moduleDependecies;
-
-    initTemplate(state.htmlTemplateSrc, onTemplateInit);
   }
 
   return {

@@ -13,7 +13,6 @@ define((function () {
 
   var dependencies = {
     appRoot: undefined,
-    loadFile: undefined,
     loadJSON: undefined,
     saveStateData: undefined,
     loadState: undefined,
@@ -429,14 +428,10 @@ define((function () {
     initEvents();
   }
 
-  function onTemplateInit() {
-    dependencies.loadJSON(AIRCRAFTS_JSON_SRC, onAircraftsInformationLoad);
-  }
-
-  function onInit(state, moduleDependencies) {
+  function onInit(moduleDependencies) {
     dependencies = moduleDependencies;
 
-    initTemplate(state.htmlTemplateSrc, onTemplateInit);
+    dependencies.loadJSON(AIRCRAFTS_JSON_SRC, onAircraftsInformationLoad);
   }
 
   return {

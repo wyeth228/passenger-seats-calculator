@@ -4,7 +4,6 @@ define((function () {
 
   var dependencies = {
     appRoot: undefined,
-    loadFile: undefined,
     saveStateData: undefined,
     getFileContentFromEvent: undefined,
     loadState: undefined,
@@ -71,15 +70,11 @@ define((function () {
     });
   }
 
-  function onTemplateInit() {
-    initBackgroundChangeEvents();
-    initFileDropEvent();
-  }
-
-  function onInit(state, moduleDependencies) {
+  function onInit(moduleDependencies) {
     dependencies = moduleDependencies;
 
-    initTemplate(state.htmlTemplateSrc, onTemplateInit);
+    initBackgroundChangeEvents();
+    initFileDropEvent();
   }
 
   return {

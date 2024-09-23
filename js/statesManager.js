@@ -1,12 +1,25 @@
 define((function () {
   var states = [];
 
+  var dependencies = {
+    appRoot: undefined,
+    loadFile: undefined,
+  };
+
+  function initTemplate(htmlTemplateSrc, callback) {
+    dependencies.loadFile(htmlTemplateSrc, function (template) {
+      dependencies.appRoot.innerHTML = template;
+
+      callback();
+    });
+  }
+
   function loadState(name) {
     var state = states.find(function (state) {
       return state.name === name;
     });
 
-    state.onInit(state);
+    initTemplate(state.htmlTemplateSrc, state.onInit);
   }
 
   function saveStateData(name, key, data) {
@@ -25,8 +38,10 @@ define((function () {
     return state.data;
   }
 
-  function init(newStates) {
+  function init(newStates, stateManagerDependencies) {
     states = newStates;
+
+    dependencies = stateManagerDependencies;
   }
 
   return {

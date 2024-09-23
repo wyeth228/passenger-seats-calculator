@@ -9,70 +9,75 @@ var main = function (
   aircraftRegistrationState,
   cabinState
 ) {
-  statesManager.init([
-    {
-      name: "file_load",
-      data: { passengersInformationFileContent: undefined },
-      htmlTemplateSrc: "./html_templates/file_load.html",
-      onInit: function (state) {
-        var dependecies = {
-          appRoot: appRoot,
-          loadFile: utils.loadFile,
-          saveStateData: statesManager.saveStateData,
-          getFileContentFromEvent: utils.getFileContentFromEvent,
-          loadState: statesManager.loadState,
-        };
+  var statesManagerDependencies = {
+    appRoot: appRoot,
+    loadFile: utils.loadFile,
+  };
 
-        fileLoadState.onInit(state, dependecies);
-      },
-    },
-    {
-      name: "aircraft_registration",
-      data: {
-        options: [
-          { value: "UP-CJ004" },
-          { value: "UP-CJ005" },
-          { value: "UP-CJ015" },
-        ],
-        aircraftRegistration: undefined,
-      },
-      htmlTemplateSrc: "./html_templates/aircraft_registration.html",
-      onInit: function (state) {
-        var dependencies = {
-          appRoot: appRoot,
-          loadFile: utils.loadFile,
-          saveStateData: statesManager.saveStateData,
-          loadState: statesManager.loadState,
-          getDataFromState: statesManager.getDataFromState,
-        };
+  statesManager.init(
+    [
+      {
+        name: "file_load",
+        data: { passengersInformationFileContent: undefined },
+        htmlTemplateSrc: "./html_templates/file_load.html",
+        onInit: function () {
+          var dependecies = {
+            appRoot: appRoot,
+            saveStateData: statesManager.saveStateData,
+            getFileContentFromEvent: utils.getFileContentFromEvent,
+            loadState: statesManager.loadState,
+          };
 
-        aircraftRegistrationState.onInit(state, dependencies);
+          fileLoadState.onInit(dependecies);
+        },
       },
-    },
-    {
-      name: "cabin",
-      data: {
-        aircrafts: undefined,
-        passengers: [],
-        renderedRowsQuantity: 0,
-      },
-      htmlTemplateSrc: "./html_templates/cabin.html",
-      onInit: function (state) {
-        var dependencies = {
-          appRoot: appRoot,
-          loadFile: utils.loadFile,
-          loadJSON: utils.loadJSON,
-          saveStateData: statesManager.saveStateData,
-          loadState: statesManager.loadState,
-          getDataFromState: statesManager.getDataFromState,
-          appendChildren: utils.appendChildren,
-          createElement: utils.createElement,
-        };
+      {
+        name: "aircraft_registration",
+        data: {
+          options: [
+            { value: "UP-CJ004" },
+            { value: "UP-CJ005" },
+            { value: "UP-CJ015" },
+          ],
+          aircraftRegistration: undefined,
+        },
+        htmlTemplateSrc: "./html_templates/aircraft_registration.html",
+        onInit: function () {
+          var dependencies = {
+            appRoot: appRoot,
+            saveStateData: statesManager.saveStateData,
+            loadState: statesManager.loadState,
+            getDataFromState: statesManager.getDataFromState,
+          };
 
-        cabinState.onInit(state, dependencies);
+          aircraftRegistrationState.onInit(dependencies);
+        },
       },
-    },
-  ]);
+      {
+        name: "cabin",
+        data: {
+          aircrafts: undefined,
+          passengers: [],
+          renderedRowsQuantity: 0,
+        },
+        htmlTemplateSrc: "./html_templates/cabin.html",
+        onInit: function () {
+          var dependencies = {
+            appRoot: appRoot,
+            loadJSON: utils.loadJSON,
+            saveStateData: statesManager.saveStateData,
+            loadState: statesManager.loadState,
+            getDataFromState: statesManager.getDataFromState,
+            appendChildren: utils.appendChildren,
+            createElement: utils.createElement,
+          };
+
+          cabinState.onInit(dependencies);
+        },
+      },
+    ],
+    statesManagerDependencies
+  );
 
   statesManager.loadState("file_load");
 };
