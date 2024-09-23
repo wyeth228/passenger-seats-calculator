@@ -208,8 +208,8 @@ define(function () {
   }
 
   function renderPassengersTable() {
-    for (var [zoneName] of getRowsQuantityOfZonesOnCurrentAircraft()) {
-      addRowToThePassengersTable(zoneName);
+    for (var zoneInfo of getRowsQuantityOfZonesOnCurrentAircraft()) {
+      addRowToThePassengersTable(zoneInfo[0]);
     }
   }
 

@@ -1,3 +1,25 @@
+/**
+ * polyfills
+ */
+
+/**
+ * Object.entries()
+ */
+if (!Object.entries) {
+  Object.entries = function (obj) {
+    var ownProps = Object.keys(obj),
+      i = ownProps.length,
+      resArray = new Array(i);
+
+    while (i--) resArray[i] = [ownProps[i], obj[ownProps[i]]];
+
+    return resArray;
+  };
+}
+
+/**
+ * application
+ */
 var AIRCRAFTS_JSON_SRC = "./data/aircrafts.json";
 
 var appRoot = document.getElementById("app");
