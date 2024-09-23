@@ -1,102 +1,3 @@
-var AIRCRAFTS_JSON_SRC = "./data/aircrafts.json";
-
-var appRoot = document.getElementById("app");
-
-function loadFile(src, callback) {
-  fetch(src).then(function (response) {
-    response.text().then(callback);
-  });
-}
-
-function loadJSON(src, callback) {
-  fetch(src).then(function (response) {
-    response.json().then(callback);
-  });
-}
-
-function innerHTML(element, text) {
-  element.innerHTML = text;
-}
-
-function appendChildren(element, children) {
-  for (var i = 0; i < children.length; ++i) {
-    element.appendChild(children[i]);
-  }
-}
-
-function elementValue(element, value) {
-  element.value = value;
-}
-
-function element(type, classNames) {
-  var element = document.createElement(type);
-
-  if (classNames) {
-    for (var i = 0; i < classNames.length; ++i) {
-      var className = classNames[i];
-
-      element.classList.add(className);
-    }
-  }
-
-  return element;
-}
-
-var statesManager = {
-  states: [
-    {
-      name: "file_load",
-      data: { passengersInformationFileContent: undefined },
-      htmlTemplateSrc: "./html_templates/file_load.html",
-      callback: fileLoadInit,
-    },
-    {
-      name: "aircraft_registration",
-      data: {
-        options: [
-          { value: "UP-CJ004" },
-          { value: "UP-CJ005" },
-          { value: "UP-CJ015" },
-        ],
-        aircraftRegistration: undefined,
-      },
-      htmlTemplateSrc: "./html_templates/aircraft_registration.html",
-      callback: aircraftRegistrationInit,
-    },
-    {
-      name: "cabin",
-      data: {
-        aircrafts: undefined,
-        passengers: [],
-        renderedRowsQuantity: 0,
-      },
-      htmlTemplateSrc: "./html_templates/cabin.html",
-      callback: cabinInit,
-    },
-  ],
-  loadState(name) {
-    var state = this.states.find(function (state) {
-      return state.name === name;
-    });
-
-    state.callback(state);
-  },
-  saveStateData(name, key, data) {
-    var state = this.states.find(function (state) {
-      return state.name === name;
-    });
-
-    state.data[key] = data;
-  },
-  getDataFromState(name) {
-    var state = this.states.find(function (state) {
-      return state.name === name;
-    });
-
-    return state.data;
-  },
-};
-
 function isAdultPassenger(passenger) {
   return passenger.type === "ВЗ";
 }
@@ -147,12 +48,17 @@ function infantPassengersQuantity(passengers) {
   }, 0);
 }
 
-function addRowToThePassengersTable(zoneName) {
-  var row = element("tr");
-  var zoneCell = element("td");
-  var adultCell = element("td");
-  var childCell = element("td");
-  var infantCell = element("td");
+function addRowToThePassengersTable(
+  zoneName,
+  createElement,
+  appendChildren,
+  innerHTML
+) {
+  var row = createElement("tr");
+  var zoneCell = createElement("td");
+  var adultCell = createElement("td");
+  var childCell = createElement("td");
+  var infantCell = createElement("td");
 
   appendChildren(row, [zoneCell, adultCell, childCell, infantCell]);
 
@@ -284,11 +190,11 @@ function renderAdditionalPassengersInformation() {
     );
 }
 
-function renderCabinColumns() {
+function renderCabinColumns(createElement, innerHTML) {
   var aircraft = getCurrentAircraft();
 
   for (var columnName of aircraft.columns) {
-    var columnElement = element("div", ["cabin__column"]);
+    var columnElement = createElement("div", ["cabin__column"]);
     innerHTML(columnElement, columnName);
 
     appRoot.querySelector(".cabin__columns").appendChild(columnElement);
@@ -305,10 +211,16 @@ function isCellOcuppied(rowNumber, columnName) {
     });
 }
 
-function createCabinRow(rowNumber, columnNames, cellsQuantity) {
-  var cabinRowElement = element("div", ["cabin__row"]);
+function createCabinRow(
+  rowNumber,
+  columnNames,
+  cellsQuantity,
+  createElement,
+  innerHTML
+) {
+  var cabinRowElement = createElement("div", ["cabin__row"]);
 
-  var cabinRowNumberElement = element("div", ["cabin__row-number"]);
+  var cabinRowNumberElement = createElement("div", ["cabin__row-number"]);
   innerHTML(cabinRowNumberElement, rowNumber);
 
   cabinRowElement.appendChild(cabinRowNumberElement);
@@ -317,14 +229,14 @@ function createCabinRow(rowNumber, columnNames, cellsQuantity) {
     var currentColumnName = columnNames[i];
 
     if (isCellOcuppied(rowNumber, currentColumnName)) {
-      var cabinCellElement = element("div", [
+      var cabinCellElement = createElement("div", [
         "cabin__cell",
         "cabin__cell_ocuppied",
       ]);
 
       cabinRowElement.appendChild(cabinCellElement);
     } else {
-      var cabinCellElement = element("div", ["cabin__cell"]);
+      var cabinCellElement = createElement("div", ["cabin__cell"]);
 
       cabinRowElement.appendChild(cabinCellElement);
     }
@@ -337,16 +249,18 @@ function createCabinZone(
   zoneName,
   zoneRowsQuantity,
   cellsQuantityOfRows,
-  columnNames
+  columnNames,
+  createElement,
+  innerHTML
 ) {
-  var zoneElement = element("div", ["cabin__zone"]);
+  var zoneElement = createElement("div", ["cabin__zone"]);
 
-  var zoneNameElement = element("div", ["cabin__zone-name"]);
+  var zoneNameElement = createElement("div", ["cabin__zone-name"]);
   innerHTML(zoneNameElement, zoneName);
 
   zoneElement.appendChild(zoneNameElement);
 
-  var zoneRowsWrapper = element("div", ["cabin__rows-wrapper"]);
+  var zoneRowsWrapper = createElement("div", ["cabin__rows-wrapper"]);
 
   zoneElement.appendChild(zoneRowsWrapper);
 
@@ -454,7 +368,7 @@ function calculatePassengersInformation() {
     });
 }
 
-function onCabinTemplateLoad(template) {
+function onCabinTemplateLoad(template, loadJSON) {
   appRoot.innerHTML = template;
 
   loadJSON(AIRCRAFTS_JSON_SRC, function (json) {
@@ -464,7 +378,7 @@ function onCabinTemplateLoad(template) {
   });
 }
 
-function cabinInit(state) {
+function cabinInit(state, loadFile) {
   loadFile(state.htmlTemplateSrc, onCabinTemplateLoad);
 }
 
@@ -481,14 +395,14 @@ function setDefaultValueForAircraftRegistration() {
   localStorage.setItem("aircraft_registration", value);
 }
 
-function onAircraftRegistrationTemplateLoad(template) {
+function onAircraftRegistrationTemplateLoad(template, innerHTML) {
   appRoot.innerHTML = template;
 
   var select = document.querySelector(".aircraft-registration__select");
 
   for (var optionData of statesManager.getDataFromState("aircraft_registration")
     .options) {
-    var optionElement = element("option");
+    var optionElement = createElement("option");
     elementValue(optionElement, optionData.value);
     innerHTML(optionElement, optionData.value);
 
@@ -516,21 +430,8 @@ function onAircraftRegistrationTemplateLoad(template) {
     });
 }
 
-function aircraftRegistrationInit(state) {
+function aircraftRegistrationInit(state, loadFile) {
   loadFile(state.htmlTemplateSrc, onAircraftRegistrationTemplateLoad);
-}
-
-function getFileContentFromEvent(event, callback) {
-  var fileReader = new FileReader();
-  fileReader.readAsText(event.dataTransfer.files[0]);
-
-  fileReader.onload = function () {
-    callback(fileReader.result);
-  };
-}
-
-function saveFileToLocalStorage(content) {
-  localStorage.setItem("file", content);
 }
 
 function onFileLoadTemplateLoad(template) {
@@ -575,9 +476,7 @@ function onFileLoadTemplateLoad(template) {
   });
 }
 
-function fileLoadInit(state) {
-  loadFile(state.htmlTemplateSrc, onFileLoadTemplateLoad);
-}
+// startup
 
 var file = localStorage.getItem("file");
 var aircraftRegistration = localStorage.getItem("aircraft_registration");
