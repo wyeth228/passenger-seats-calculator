@@ -1,15 +1,25 @@
 define(function () {
   return {
     loadFile: function (src, callback) {
-      fetch(src).then(function (response) {
-        response.text().then(callback);
-      });
+      var request = new XMLHttpRequest();
+      request.overrideMimeType("text/plain");
+      request.open("GET", src, true);
+      request.onload = function () {
+        callback(request.responseText);
+      };
+
+      request.send(null);
     },
 
     loadJSON: function (src, callback) {
-      fetch(src).then(function (response) {
-        response.json().then(callback);
-      });
+      var request = new XMLHttpRequest();
+      request.overrideMimeType("application/json");
+      request.open("GET", src, true);
+      request.onload = function () {
+        callback(JSON.parse(request.responseText));
+      };
+
+      request.send(null);
     },
 
     innerHTML: function (element, text) {
