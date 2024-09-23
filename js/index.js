@@ -79,6 +79,27 @@ var main = function (
     statesManagerDependencies
   );
 
+  var aircraftRegistration = localStorage.getItem("aircraft_registration");
+  var file = localStorage.getItem("file");
+
+  if (file) {
+    statesManager.saveStateData(
+      "file_load",
+      "passengersInformationFileContent",
+      file
+    );
+
+    statesManager.saveStateData(
+      "aircraft_registration",
+      "aircraftRegistration",
+      aircraftRegistration
+    );
+
+    statesManager.loadState("cabin");
+
+    return;
+  }
+
   statesManager.loadState("file_load");
 };
 
