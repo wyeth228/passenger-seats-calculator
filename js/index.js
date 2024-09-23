@@ -127,9 +127,9 @@ requirejs(
   [
     "utils",
     "statesManager",
-    "fileLoadState",
-    "aircraftRegistrationState",
-    "cabinState",
+    "states/fileLoadState",
+    "states/aircraftRegistrationState",
+    "states/cabinState",
   ],
   main
 );
