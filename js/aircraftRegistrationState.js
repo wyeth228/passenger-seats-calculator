@@ -47,14 +47,6 @@ define((function () {
     dependencies.loadState("cabin");
   }
 
-  function initTemplate(htmlTemplateSrc, callback) {
-    dependencies.loadFile(htmlTemplateSrc, function (template) {
-      dependencies.appRoot.innerHTML = template;
-
-      callback();
-    });
-  }
-
   function onInit(moduleDependecies) {
     dependencies = moduleDependecies;
 
