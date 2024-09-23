@@ -20,8 +20,6 @@ if (!Object.entries) {
 /**
  * application
  */
-var AIRCRAFTS_JSON_SRC = "./data/aircrafts.json";
-
 var appRoot = document.getElementById("app");
 
 var main = function (
