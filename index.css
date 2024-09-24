@@ -65,13 +65,21 @@
 }
 
 .file-load__drag-zone_active .file-load__svg {
+  -webkit-transform: scale(0.9, 0.9);
+  -moz-transform: scale(0.9, 0.9);
+  -ms-transform: scale(0.9, 0.9);
+  -o-transform: scale(0.9, 0.9);
   transform: scale(0.9, 0.9);
 }
 
 .file-load__svg {
   width: 300px;
 
-  transition: transform ease 0.3s;
+  -webkit-transition: -webkit-transform ease 0.3s;
+  -o-transition: -o-transform ease 0.3s;
+  -moz-transition: transform ease 0.3s, -moz-transform ease 0.3s;
+  transition: transform ease 0.3s, -webkit-transform ease 0.3s,
+    -moz-transform ease 0.3s, -o-transform ease 0.3s;
 }
 
 .file-load__svg path {
