@@ -82,10 +82,6 @@
     -moz-transform ease 0.3s, -o-transform ease 0.3s;
 }
 
-.file-load__svg path {
-  stroke: #212121;
-}
-
 .aircraft-registration {
   display: -webkit-box;
   display: -webkit-flex;
@@ -171,6 +167,10 @@
 }
 
 .cabin__passengers {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
 
   height: 100%;
@@ -247,6 +247,10 @@ td {
 }
 
 .cabin__map {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
 
   height: 100%;
