@@ -61,15 +61,6 @@ define(function () {
     document.addEventListener("drop", onFileDrop);
   }
 
-  // remove
-  function initTemplate(htmlTemplateSrc, callback) {
-    dependencies.loadFile(htmlTemplateSrc, function (template) {
-      dependencies.appRoot.innerHTML = template;
-
-      callback();
-    });
-  }
-
   function onInit(moduleDependencies) {
     dependencies = moduleDependencies;
 

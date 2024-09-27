@@ -421,15 +421,6 @@ define(function () {
     );
   }
 
-  // do we need move this function to utils? sure...
-  function initTemplate(htmlTemplateSrc, callback) {
-    dependencies.loadFile(htmlTemplateSrc, function (template) {
-      dependencies.appRoot.innerHTML = template;
-
-      callback();
-    });
-  }
-
   function onAircraftsInformationLoad(json) {
     dependencies.saveStateData("cabin", "aircrafts", json);
 
