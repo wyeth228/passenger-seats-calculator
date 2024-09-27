@@ -266,13 +266,22 @@ define(function () {
   }
 
   function isOcuppiedCell(rowNumber, columnName) {
-    return dependencies
-      .getDataFromState("cabin")
-      .passengers.searchIn(function (passenger) {
+    var passengers = dependencies.getDataFromState("cabin").passengers;
+
+    var cellSearchedResult = dependencies.searchIn(
+      passengers,
+      function (passenger) {
         if (passenger.row === rowNumber && passenger.column === columnName) {
           return true;
         }
-      }).find;
+      }
+    );
+
+    if (cellSearchedResult) {
+      return true;
+    }
+
+    return false;
   }
 
   function createCabinRow(rowNumber, columnNames, cellsQuantity) {

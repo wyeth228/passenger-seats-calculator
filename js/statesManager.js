@@ -38,7 +38,7 @@ define(function () {
   }
 
   function getDataFromState(name) {
-    var state = dependencies.searchIn(states, function (state) {
+    var stateSearchResult = dependencies.searchIn(states, function (state) {
       return state.name === name;
     });
 
