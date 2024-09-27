@@ -13,21 +13,23 @@ define(function () {
     localStorage.setItem("file", content);
   }
 
-  function changeDragZoneBackground(event, dragZone) {
-    event.preventDefault();
-
-    var dragZone = document.querySelector("." + DRAG_ZONE_CLASSNAME);
-
-    dragZone.classList.add(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
+  function getDragZoneElement() {
+    return document.querySelector("." + DRAG_ZONE_CLASSNAME);
   }
 
-  function resetDragZoneBackground(event, dragZone) {
+  function changeDragZoneBackground(event) {
     event.preventDefault();
 
-    var dragZone = document.querySelector("." + DRAG_ZONE_CLASSNAME);
+    getDragZoneElement().classList.add(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
+  }
 
-    if (!dragZone.contains(event.target)) {
-      dragZone.classList.remove(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
+  function resetDragZoneBackground(event) {
+    event.preventDefault();
+
+    var dragZoneElement = getDragZoneElement();
+
+    if (!dragZoneElement.contains(event.target)) {
+      dragZoneElement.classList.remove(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
     }
   }
 
