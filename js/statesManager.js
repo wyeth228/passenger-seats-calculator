@@ -1,6 +1,7 @@
 define(function () {
   var states = [];
-  var currentState = 0;
+  var statesDataCopies = [];
+  var currentState = -1;
 
   var dependencies = {
     appRoot: undefined,
@@ -17,6 +18,12 @@ define(function () {
   }
 
   function loadState(name) {
+    var previousStateIndex = currentState;
+
+    if (previousStateIndex >= 0) {
+      states[previousStateIndex].onDestroy();
+    }
+
     var stateSearchResult = dependencies.searchIn(states, function (state) {
       return state.name === name;
     });
@@ -45,8 +52,16 @@ define(function () {
     return stateSearchResult.find.data;
   }
 
+  function saveStatesDataCopies() {
+    for (var i = 0; i < states.length; ++i) {
+      statesDataCopies[i] = states[i].data;
+    }
+  }
+
   function init(newStates, stateManagerDependencies) {
     states = newStates;
+
+    saveStatesDataCopies();
 
     dependencies = stateManagerDependencies;
   }

@@ -15,11 +15,16 @@ define(function () {
 
   function changeDragZoneBackground(event, dragZone) {
     event.preventDefault();
+
+    var dragZone = document.querySelector("." + DRAG_ZONE_CLASSNAME);
+
     dragZone.classList.add(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
   }
 
   function resetDragZoneBackground(event, dragZone) {
     event.preventDefault();
+
+    var dragZone = document.querySelector("." + DRAG_ZONE_CLASSNAME);
 
     if (!dragZone.contains(event.target)) {
       dragZone.classList.remove(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
@@ -27,14 +32,8 @@ define(function () {
   }
 
   function initBackgroundChangeEvents() {
-    var dragZone = document.querySelector("." + DRAG_ZONE_CLASSNAME);
-
-    document.addEventListener("dragenter", function (event) {
-      changeDragZoneBackground(event, dragZone);
-    });
-    document.addEventListener("dragover", function (event) {
-      resetDragZoneBackground(event, dragZone);
-    });
+    document.addEventListener("dragenter", changeDragZoneBackground);
+    document.addEventListener("dragover", resetDragZoneBackground);
   }
 
   function onFileContentReaded(content) {
@@ -62,6 +61,7 @@ define(function () {
     document.addEventListener("drop", onFileDrop);
   }
 
+  // remove
   function initTemplate(htmlTemplateSrc, callback) {
     dependencies.loadFile(htmlTemplateSrc, function (template) {
       dependencies.appRoot.innerHTML = template;
@@ -77,7 +77,14 @@ define(function () {
     initFileDropEvent();
   }
 
+  function onDestroy() {
+    document.removeEventListener("dragenter", changeDragZoneBackground);
+    document.removeEventListener("dragover", resetDragZoneBackground);
+    document.removeEventListener("drop", onFileDrop);
+  }
+
   return {
     onInit,
+    onDestroy,
   };
 });

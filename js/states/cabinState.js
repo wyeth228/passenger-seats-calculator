@@ -444,7 +444,22 @@ define(function () {
     dependencies.loadJSON(AIRCRAFTS_JSON_SRC, onAircraftsInformationLoad);
   }
 
+  function onDestroy() {
+    var fileLoadButton = appRoot.querySelector("." + RED_BUTTON_CLASSNAME);
+    var aircraftRegistrationButton = appRoot.querySelector(
+      "." + ORANGE_BUTTON_CLASSNAME
+    );
+
+    fileLoadButton.removeEventListener("click", returnBackToFileLoad);
+
+    aircraftRegistrationButton.removeEventListener(
+      "click",
+      returnBackToAircraftRegistration
+    );
+  }
+
   return {
     onInit,
+    onDestroy,
   };
 });

@@ -64,7 +64,18 @@ define(function () {
     skipButton.addEventListener("click", skipSelection);
   }
 
+  function onDestroy() {
+    var selectElement = document.querySelector(
+      ".aircraft-registration__select"
+    );
+    var skipButton = document.querySelector(".aircraft-registration__button");
+
+    selectElement.removeEventListener("change", onSelect);
+    skipButton.removeEventListener("click", skipSelection);
+  }
+
   return {
     onInit,
+    onDestroy,
   };
 });

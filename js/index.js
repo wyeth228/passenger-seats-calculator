@@ -51,6 +51,7 @@ var main = function (
 
           fileLoadState.onInit(dependecies);
         },
+        onDestroy: fileLoadState.onDestroy,
       },
       {
         name: "aircraft_registration",
@@ -73,6 +74,7 @@ var main = function (
 
           aircraftRegistrationState.onInit(dependencies);
         },
+        onDestroy: aircraftRegistrationState.onDestroy,
       },
       {
         name: "cabin",
@@ -96,6 +98,7 @@ var main = function (
 
           cabinState.onInit(dependencies);
         },
+        onDestroy: cabinState.onDestroy,
       },
     ],
     statesManagerDependencies
