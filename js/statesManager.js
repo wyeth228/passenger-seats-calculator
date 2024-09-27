@@ -1,9 +1,11 @@
 define(function () {
   var states = [];
+  var currentState = 0;
 
   var dependencies = {
     appRoot: undefined,
     loadFile: undefined,
+    searchIn: undefined,
   };
 
   function initTemplate(htmlTemplateSrc, callback) {
@@ -15,27 +17,32 @@ define(function () {
   }
 
   function loadState(name) {
-    var state = states.find(function (state) {
+    var stateSearchResult = dependencies.searchIn(states, function (state) {
       return state.name === name;
     });
 
-    initTemplate(state.htmlTemplateSrc, state.onInit);
+    currentState = stateSearchResult.index;
+
+    initTemplate(
+      stateSearchResult.find.htmlTemplateSrc,
+      stateSearchResult.find.onInit
+    );
   }
 
   function saveStateData(name, key, data) {
-    var state = states.find(function (state) {
+    var stateSearchResult = dependencies.searchIn(states, function (state) {
       return state.name === name;
     });
 
-    state.data[key] = data;
+    stateSearchResult.find.data[key] = data;
   }
 
   function getDataFromState(name) {
-    var state = states.find(function (state) {
+    var state = dependencies.searchIn(states, function (state) {
       return state.name === name;
     });
 
-    return state.data;
+    return stateSearchResult.find.data;
   }
 
   function init(newStates, stateManagerDependencies) {

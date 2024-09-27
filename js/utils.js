@@ -60,5 +60,18 @@ define(function () {
         return true;
       }
     },
+
+    searchIn: function (array, callback) {
+      for (var i = 0; i < array.length; ++i) {
+        if (callback(array[i])) {
+          return {
+            find: array[i],
+            index: i,
+          };
+        }
+      }
+
+      return null;
+    },
   };
 });

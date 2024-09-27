@@ -32,6 +32,7 @@ var main = function (
   var statesManagerDependencies = {
     appRoot: appRoot,
     loadFile: utils.loadFile,
+    searchIn: utils.searchIn,
   };
 
   statesManager.init(
@@ -90,6 +91,7 @@ var main = function (
             getDataFromState: statesManager.getDataFromState,
             appendChildren: utils.appendChildren,
             createElement: utils.createElement,
+            searchIn: utils.searchIn,
           };
 
           cabinState.onInit(dependencies);

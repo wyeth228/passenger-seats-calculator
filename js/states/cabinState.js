@@ -19,6 +19,7 @@ define(function () {
     getDataFromState: undefined,
     appendChildren: undefined,
     createElement: undefined,
+    searchIn: undefined,
   };
 
   function isAdultPassenger(passenger) {
@@ -267,11 +268,11 @@ define(function () {
   function isOcuppiedCell(rowNumber, columnName) {
     return dependencies
       .getDataFromState("cabin")
-      .passengers.find(function (passenger) {
+      .passengers.searchIn(function (passenger) {
         if (passenger.row === rowNumber && passenger.column === columnName) {
           return true;
         }
-      });
+      }).find;
   }
 
   function createCabinRow(rowNumber, columnNames, cellsQuantity) {
