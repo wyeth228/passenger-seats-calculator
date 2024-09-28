@@ -19,6 +19,7 @@ define(function () {
     getDataFromState: undefined,
     appendChildren: undefined,
     createElement: undefined,
+    searchIn: undefined,
   };
 
   function isAdultPassenger(passenger) {
@@ -265,13 +266,22 @@ define(function () {
   }
 
   function isOcuppiedCell(rowNumber, columnName) {
-    return dependencies
-      .getDataFromState("cabin")
-      .passengers.find(function (passenger) {
+    var passengers = dependencies.getDataFromState("cabin").passengers;
+
+    var cellSearchedResult = dependencies.searchIn(
+      passengers,
+      function (passenger) {
         if (passenger.row === rowNumber && passenger.column === columnName) {
           return true;
         }
-      });
+      }
+    );
+
+    if (cellSearchedResult) {
+      return true;
+    }
+
+    return false;
   }
 
   function createCabinRow(rowNumber, columnNames, cellsQuantity) {
@@ -411,15 +421,6 @@ define(function () {
     );
   }
 
-  // do we need move this function to utils? sure...
-  function initTemplate(htmlTemplateSrc, callback) {
-    dependencies.loadFile(htmlTemplateSrc, function (template) {
-      dependencies.appRoot.innerHTML = template;
-
-      callback();
-    });
-  }
-
   function onAircraftsInformationLoad(json) {
     dependencies.saveStateData("cabin", "aircrafts", json);
 
@@ -434,7 +435,22 @@ define(function () {
     dependencies.loadJSON(AIRCRAFTS_JSON_SRC, onAircraftsInformationLoad);
   }
 
+  function onDestroy() {
+    var fileLoadButton = appRoot.querySelector("." + RED_BUTTON_CLASSNAME);
+    var aircraftRegistrationButton = appRoot.querySelector(
+      "." + ORANGE_BUTTON_CLASSNAME
+    );
+
+    fileLoadButton.removeEventListener("click", returnBackToFileLoad);
+
+    aircraftRegistrationButton.removeEventListener(
+      "click",
+      returnBackToAircraftRegistration
+    );
+  }
+
   return {
     onInit,
+    onDestroy,
   };
 });

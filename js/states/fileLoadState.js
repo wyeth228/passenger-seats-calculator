@@ -13,28 +13,29 @@ define(function () {
     localStorage.setItem("file", content);
   }
 
-  function changeDragZoneBackground(event, dragZone) {
-    event.preventDefault();
-    dragZone.classList.add(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
+  function getDragZoneElement() {
+    return document.querySelector("." + DRAG_ZONE_CLASSNAME);
   }
 
-  function resetDragZoneBackground(event, dragZone) {
+  function changeDragZoneBackground(event) {
     event.preventDefault();
 
-    if (!dragZone.contains(event.target)) {
-      dragZone.classList.remove(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
+    getDragZoneElement().classList.add(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
+  }
+
+  function resetDragZoneBackground(event) {
+    event.preventDefault();
+
+    var dragZoneElement = getDragZoneElement();
+
+    if (!dragZoneElement.contains(event.target)) {
+      dragZoneElement.classList.remove(DRAG_ZONE_BACKGROUND_CHANGED_CLASSNAME);
     }
   }
 
   function initBackgroundChangeEvents() {
-    var dragZone = document.querySelector("." + DRAG_ZONE_CLASSNAME);
-
-    document.addEventListener("dragenter", function (event) {
-      changeDragZoneBackground(event, dragZone);
-    });
-    document.addEventListener("dragover", function (event) {
-      resetDragZoneBackground(event, dragZone);
-    });
+    document.addEventListener("dragenter", changeDragZoneBackground);
+    document.addEventListener("dragover", resetDragZoneBackground);
   }
 
   function onFileContentReaded(content) {
@@ -62,14 +63,6 @@ define(function () {
     document.addEventListener("drop", onFileDrop);
   }
 
-  function initTemplate(htmlTemplateSrc, callback) {
-    dependencies.loadFile(htmlTemplateSrc, function (template) {
-      dependencies.appRoot.innerHTML = template;
-
-      callback();
-    });
-  }
-
   function onInit(moduleDependencies) {
     dependencies = moduleDependencies;
 
@@ -77,7 +70,14 @@ define(function () {
     initFileDropEvent();
   }
 
+  function onDestroy() {
+    document.removeEventListener("dragenter", changeDragZoneBackground);
+    document.removeEventListener("dragover", resetDragZoneBackground);
+    document.removeEventListener("drop", onFileDrop);
+  }
+
   return {
     onInit,
+    onDestroy,
   };
 });

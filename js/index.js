@@ -32,6 +32,8 @@ var main = function (
   var statesManagerDependencies = {
     appRoot: appRoot,
     loadFile: utils.loadFile,
+    searchIn: utils.searchIn,
+    copy: utils.copy,
   };
 
   statesManager.init(
@@ -50,6 +52,7 @@ var main = function (
 
           fileLoadState.onInit(dependecies);
         },
+        onDestroy: fileLoadState.onDestroy,
       },
       {
         name: "aircraft_registration",
@@ -72,6 +75,7 @@ var main = function (
 
           aircraftRegistrationState.onInit(dependencies);
         },
+        onDestroy: aircraftRegistrationState.onDestroy,
       },
       {
         name: "cabin",
@@ -90,10 +94,12 @@ var main = function (
             getDataFromState: statesManager.getDataFromState,
             appendChildren: utils.appendChildren,
             createElement: utils.createElement,
+            searchIn: utils.searchIn,
           };
 
           cabinState.onInit(dependencies);
         },
+        onDestroy: cabinState.onDestroy,
       },
     ],
     statesManagerDependencies
