@@ -73,5 +73,9 @@ define(function () {
 
       return null;
     },
+
+    copy: function (object) {
+      return JSON.parse(JSON.stringify(object));
+    },
   };
 });

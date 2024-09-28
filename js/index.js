@@ -33,6 +33,7 @@ var main = function (
     appRoot: appRoot,
     loadFile: utils.loadFile,
     searchIn: utils.searchIn,
+    copy: utils.copy,
   };
 
   statesManager.init(

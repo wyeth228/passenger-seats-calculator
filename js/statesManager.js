@@ -1,12 +1,13 @@
 define(function () {
   var states = [];
   var statesDataCopies = [];
-  var currentState = -1;
+  var currentStateIndex = -1;
 
   var dependencies = {
     appRoot: undefined,
     loadFile: undefined,
     searchIn: undefined,
+    copy: undefined,
   };
 
   function initTemplate(htmlTemplateSrc, callback) {
@@ -17,18 +18,22 @@ define(function () {
     });
   }
 
-  function loadState(name) {
-    var previousStateIndex = currentState;
+  function resetDataOfState(index) {
+    states[index].data = dependencies.copy(statesDataCopies[index]);
+  }
 
-    if (previousStateIndex >= 0) {
-      states[previousStateIndex].onDestroy();
+  function loadState(name) {
+    if (currentStateIndex >= 0) {
+      states[currentStateIndex].onDestroy();
     }
 
     var stateSearchResult = dependencies.searchIn(states, function (state) {
       return state.name === name;
     });
 
-    currentState = stateSearchResult.index;
+    resetDataOfState(stateSearchResult.index);
+
+    currentStateIndex = stateSearchResult.index;
 
     initTemplate(
       stateSearchResult.find.htmlTemplateSrc,
@@ -54,16 +59,16 @@ define(function () {
 
   function saveStatesDataCopies() {
     for (var i = 0; i < states.length; ++i) {
-      statesDataCopies[i] = states[i].data;
+      statesDataCopies[i] = dependencies.copy(states[i].data);
     }
   }
 
   function init(newStates, stateManagerDependencies) {
     states = newStates;
 
-    saveStatesDataCopies();
-
     dependencies = stateManagerDependencies;
+
+    saveStatesDataCopies();
   }
 
   return {
